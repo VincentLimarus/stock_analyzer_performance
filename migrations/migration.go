@@ -1,7 +1,7 @@
 package migrations
 
 import (
-	configs "VincentLimarus/go-skeleton-files/config"
+	configs "VincentLimarus/stock-analyzer-performance/config"
 	"context"
 	"errors"
 	"fmt"

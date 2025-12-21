@@ -1,4 +1,4 @@
-module VincentLimarus/go-skeleton-files
+module VincentLimarus/stock-analyzer-performance
 
 go 1.24.0
 

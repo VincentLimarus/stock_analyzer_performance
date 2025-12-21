@@ -1,7 +1,7 @@
 package http
 
 import (
-	delivery "VincentLimarus/go-skeleton-files/delivery/http"
+	delivery "VincentLimarus/stock-analyzer-performance/delivery/http"
 	"net/http"
 	"time"
 

@@ -1,12 +1,12 @@
 package main
 
 import (
-	"VincentLimarus/go-skeleton-files/client"
-	configs "VincentLimarus/go-skeleton-files/config"
-	"VincentLimarus/go-skeleton-files/migrations"
-	"VincentLimarus/go-skeleton-files/repository"
-	"VincentLimarus/go-skeleton-files/service"
-	"VincentLimarus/go-skeleton-files/util"
+	"VincentLimarus/stock-analyzer-performance/client"
+	configs "VincentLimarus/stock-analyzer-performance/config"
+	"VincentLimarus/stock-analyzer-performance/migrations"
+	"VincentLimarus/stock-analyzer-performance/repository"
+	"VincentLimarus/stock-analyzer-performance/service"
+	"VincentLimarus/stock-analyzer-performance/util"
 	"context"
 	"fmt"
 	"log"
@@ -16,9 +16,9 @@ import (
 	"syscall"
 	"time"
 
-	cmdHttp "VincentLimarus/go-skeleton-files/cmd/http"
-	delivery "VincentLimarus/go-skeleton-files/delivery/http"
-	serviceHealth "VincentLimarus/go-skeleton-files/service/health"
+	cmdHttp "VincentLimarus/stock-analyzer-performance/cmd/http"
+	delivery "VincentLimarus/stock-analyzer-performance/delivery/http"
+	serviceHealth "VincentLimarus/stock-analyzer-performance/service/health"
 
 	"github.com/jmoiron/sqlx"
 )

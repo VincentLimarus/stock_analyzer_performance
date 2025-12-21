@@ -1,8 +1,8 @@
 package http
 
 import (
-	configs "VincentLimarus/go-skeleton-files/config"
-	delivery "VincentLimarus/go-skeleton-files/delivery/http"
+	configs "VincentLimarus/stock-analyzer-performance/config"
+	delivery "VincentLimarus/stock-analyzer-performance/delivery/http"
 	"context"
 	"fmt"
 	"net/http"

@@ -1,6 +1,6 @@
 package service
 
-import "VincentLimarus/go-skeleton-files/service/health"
+import "VincentLimarus/stock-analyzer-performance/service/health"
 
 type IRegistry interface {
 	GetHealth() health.IHealth

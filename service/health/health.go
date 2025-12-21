@@ -1,7 +1,7 @@
 package health
 
 import (
-	"VincentLimarus/go-skeleton-files/model"
+	"VincentLimarus/stock-analyzer-performance/model"
 	"context"
 
 	"github.com/jmoiron/sqlx"
