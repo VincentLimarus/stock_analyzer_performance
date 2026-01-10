@@ -9,6 +9,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 )
+
 type rateLimiter struct {
 	visitors map[string]*visitor
 	mu       sync.RWMutex
@@ -36,7 +37,7 @@ func CreateRateLimiter(rate int, window time.Duration) gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		ip := c.ClientIP()
-		
+
 		if !limiter.allowRequest(ip) {
 			c.JSON(http.StatusTooManyRequests, gin.H{
 				"error": "Rate limit exceeded. Please try again later.",
@@ -69,7 +70,7 @@ func (rl *rateLimiter) allowRequest(ip string) bool {
 	now := time.Now()
 	timePassed := now.Sub(v.lastSeen)
 	tokensToAdd := int(timePassed / rl.window * time.Duration(rl.rate))
-	
+
 	if tokensToAdd > 0 {
 		v.tokens = min(v.tokens+tokensToAdd, rl.rate)
 		v.lastSeen = now
@@ -99,7 +100,6 @@ func (rl *rateLimiter) cleanupVisitors() {
 	}
 }
 
-
 type Operation func(ctx context.Context) error
 
 // gracefullyShutdown handles graceful shutdown of services
@@ -114,7 +114,7 @@ func GracefullyShutdown(ctx context.Context, timeout time.Duration, operations m
 
 		// Create a channel to signal when all operations are complete
 		done := make(chan struct{})
-		
+
 		go func() {
 			// Execute all shutdown operations
 			var wg sync.WaitGroup
@@ -142,6 +142,6 @@ func GracefullyShutdown(ctx context.Context, timeout time.Duration, operations m
 			log.Println("Shutdown timeout exceeded")
 		}
 	}()
-	
+
 	return wait
 }

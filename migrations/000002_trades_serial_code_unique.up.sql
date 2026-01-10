@@ -1,0 +1,1 @@
+ALTER TABLE trades ADD CONSTRAINT trades_serial_code_unique UNIQUE (serial_code);

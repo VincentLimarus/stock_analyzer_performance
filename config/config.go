@@ -10,15 +10,15 @@ import (
 )
 
 var (
-	Env EnvFlat
+	Env  EnvFlat
 	once sync.Once
 )
 
 type EnvFlat struct {
-	AutoMigration string `env:"AUTO_MIGRATION"`
-	AppPort	  string `env:"APP_PORT"`
-	AppReadHeaderTimeoutInSeconds int `env:"AppReadHeaderTimeoutInSeconds"`
-	
+	AutoMigration                 string `env:"AUTO_MIGRATION"`
+	AppPort                       string `env:"APP_PORT"`
+	AppReadHeaderTimeoutInSeconds int    `env:"AppReadHeaderTimeoutInSeconds"`
+
 	DBHost     string `env:"DB_HOST"`
 	DBPort     string `env:"DB_PORT"`
 	DBUser     string `env:"DB_USER"`
@@ -47,7 +47,7 @@ func Init() {
 			AppReadHeaderTimeoutInSeconds: func() int {
 				val := os.Getenv("AppReadHeaderTimeoutInSeconds")
 				if val == "" {
-					return 10 
+					return 10
 				}
 				var intVal int
 				fmt.Sscanf(val, "%d", &intVal)

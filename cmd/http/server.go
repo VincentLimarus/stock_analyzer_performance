@@ -16,11 +16,10 @@ type IServer interface {
 }
 
 type Server struct {
-	router Router 
-	srv *http.Server
+	router Router
+	srv    *http.Server
 }
 
-// cmd/http/server.go
 func NewServer(delivery delivery.IRegistry, middlewareLimiter gin.HandlerFunc) *Server {
 	return &Server{
 		router: NewRouter(
@@ -36,7 +35,7 @@ func NewServer(delivery delivery.IRegistry, middlewareLimiter gin.HandlerFunc) *
 
 func (s *Server) Serve(ctx context.Context) {
 	s.srv.Handler = s.router.Register()
-	go func () {
+	go func() {
 		if err := s.srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			panic(fmt.Sprintf("Failed to start HTTP server: %v", err))
 		}

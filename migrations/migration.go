@@ -17,8 +17,7 @@ import (
 func Run(ctx context.Context) error {
 	// init database migration
 	source := "file://migrations"
-	
-	// IMPORTANT: golang-migrate butuh format URL, bukan libpq format
+
 	dsn := fmt.Sprintf(
 		"postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		configs.Env.DBUser,
@@ -27,9 +26,9 @@ func Run(ctx context.Context) error {
 		configs.Env.DBPort,
 		configs.Env.DBName,
 	)
-	
+
 	log.Println("Migration DSN:", dsn)
-	
+
 	m, err := migrate.New(source, dsn)
 	if err != nil {
 		log.Printf("error init golang-migrate: %v", err)
