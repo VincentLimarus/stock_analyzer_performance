@@ -19,7 +19,8 @@ var (
 
 	GetListTradeByYearQuery = `
 		SELECT 
-			id, 
+			uuid, 
+			serial_code,
 			stock_code, 
 			status, 
 			lot, 
@@ -29,22 +30,8 @@ var (
 			created_at, 
 			updated_at
 		FROM trades
-		WHERE EXTRACT(YEAR FROM created_at) = $1
-		ORDER BY created_at ASC
-	`
-
-	GetAllListTradeQuery = `
-		SELECT 
-			id, 
-			stock_code, 
-			status, 
-			lot, 
-			avg_buy_price, 
-			avg_sell_price, 
-			dividen_amount, 
-			created_at, 
-			updated_at
-		FROM trades
-		ORDER BY created_at DESC
+		WHERE serial_code ~ '^[0-9]{4}-'
+		AND split_part(serial_code, '-', 1) = ANY($1)
+		ORDER BY created_at ASC;
 	`
 )

@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/jmoiron/sqlx"
+	"github.com/lib/pq"
 )
 
 type Trade struct {
@@ -22,6 +23,7 @@ func NewTrade(db *sqlx.DB) *Trade {
 
 type ITrade interface {
 	UpsertTradeData(ctx context.Context, tx *sqlx.Tx, payload []db.Trade) error
+	GetListTradeByYears(ctx context.Context, years []string) ([]db.Trade, error)
 }
 
 func (r *Trade) UpsertTradeData(ctx context.Context, tx *sqlx.Tx, payload []db.Trade) error {
@@ -60,4 +62,15 @@ func (r *Trade) UpsertTradeData(ctx context.Context, tx *sqlx.Tx, payload []db.T
 	log.Printf("✅ Inserted %d rows", rowsAffected)
 
 	return nil
+}
+
+func (r *Trade) GetListTradeByYears(ctx context.Context, years []string) ([]db.Trade, error) {
+	var trades []db.Trade
+	
+	err := r.db.SelectContext(ctx, &trades, GetListTradeByYearQuery, pq.Array(years))
+	if err != nil {
+		return nil, err
+	}
+
+	return trades, nil
 }

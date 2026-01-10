@@ -43,7 +43,7 @@ func (r *router) Register() *gin.Engine {
 		gin.Recovery(),
 		gin.Logger(),
 	)
-
+	
 	r.engine.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"status": "ok"})
 	})
@@ -57,5 +57,6 @@ func (r *router) Register() *gin.Engine {
 func (r *router) Trades(versionGroup *gin.RouterGroup) {
 	tradesGroup := versionGroup.Group("/trades")
 
-	tradesGroup.POST("/upsert", r.delivery.GetTrade().UpsertTradeData) // Auth Middleware added later
+	tradesGroup.POST("/upsert", r.delivery.GetTrade().UpsertTradeData)
+	tradesGroup.GET("", r.delivery.GetTrade().GetListTradeByYears) 
 }
