@@ -33,7 +33,6 @@ func main() {
 	
 	// Load environment variables
 	configs.Init()
-	// End of loading environment variables
 	
 	// Database connection
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Jakarta",
@@ -45,9 +44,9 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
+	defer DB.Close() // ensure DB closes on exit
 
 	log.Println("Connected to PostgreSQL")
-	// End of database connection
 
 	// Auto Migration
 	if configs.Env.AutoMigration == "true" {
@@ -55,7 +54,6 @@ func main() {
 			log.Fatalf("failed to run migrations: %v", err)
 		}
 	}
-	// End of Auto Migration
 
 	// Initialize Dependencies
 	repositoryRegistry := initRepositoryDependency(repositoryDependency{
@@ -70,50 +68,50 @@ func main() {
 	deliveryRegistry := initDeliveryDependency(deliveryDependency{
 		serviceRegistry: &serviceRegistry,
 	})
-	// End of Initialize Dependencies	
 
 	middlewareLimiter := util.CreateRateLimiter(100, time.Minute)
+	
 	// Start HTTP Server
 	httpServer := cmdHttp.NewServer( 
 		deliveryRegistry,
 		middlewareLimiter,
 	)
+
+	// PERBAIKAN: Jalankan server di goroutine terpisah
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
 		httpServer.Serve(ctx)
-
-		// Graceful Shutdown //
-		shutdownDelay := 10 * time.Second
-		if configs.Env.ShutDownDelayInSeconds > 0 {
-			shutdownDelay = time.Duration(configs.Env.ShutDownDelayInSeconds) * time.Second
-		}
-
-		wait := util.GracefullyShutdown(ctx, shutdownDelay,
-			map[string]util.Operation{
-				"db": func(_ context.Context) error {
-					log.Println("Closing database connection...")
-					return DB.Close()
-				},
-				"server": func(ctx context.Context) error {
-					log.Println("Shutting down HTTP server...")
-					return httpServer.Shutdown(ctx)
-				},
-			},
-		)
-		<-wait
-		// End Graceful Shutdown //
 	}()
 
-	log.Printf("Server started on port %d", configs.Env.AppPort)
+	log.Printf("Server started on port %s", configs.Env.AppPort)
 
-	// Wait for interrupt signal
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 
 	log.Println("Shutting down server...")
-	cancel()
+	cancel() // Cancel context untuk signal shutdown
+
+	shutdownDelay := 10 * time.Second
+	if configs.Env.ShutDownDelayInSeconds > 0 {
+		shutdownDelay = time.Duration(configs.Env.ShutDownDelayInSeconds) * time.Second
+	}
+
+	wait := util.GracefullyShutdown(ctx, shutdownDelay,
+		map[string]util.Operation{
+			"server": func(ctx context.Context) error {
+				log.Println("Shutting down HTTP server...")
+				return httpServer.Shutdown(ctx)
+			},
+			"db": func(_ context.Context) error {
+				log.Println("Closing database connection...")
+				return DB.Close()
+			},
+		},
+	)
+	<-wait
+
 	wg.Wait()
 	log.Println("Server exited")
 }

@@ -20,6 +20,7 @@ type Server struct {
 	srv *http.Server
 }
 
+// cmd/http/server.go
 func NewServer(delivery delivery.IRegistry, middlewareLimiter gin.HandlerFunc) *Server {
 	return &Server{
 		router: NewRouter(
@@ -27,7 +28,7 @@ func NewServer(delivery delivery.IRegistry, middlewareLimiter gin.HandlerFunc) *
 			middlewareLimiter,
 		),
 		srv: &http.Server{
-			Addr:              fmt.Sprintf(":%d", configs.Env.AppPort),
+			Addr:              fmt.Sprintf(":%s", configs.Env.AppPort), // ubah %d jadi %s
 			ReadHeaderTimeout: time.Duration(configs.Env.AppReadHeaderTimeoutInSeconds) * time.Second,
 		},
 	}
