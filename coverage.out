@@ -1,0 +1,22 @@
+mode: atomic
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:21.10,25.2 1 1
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:32.85,33.23 1 0
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:33.23,35.3 1 0
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:37.2,37.36 1 0
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:37.36,40.32 2 0
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:40.32,42.44 2 0
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:42.44,43.13 1 0
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:46.4,47.63 2 0
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:47.63,49.5 1 0
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:51.4,59.6 1 0
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:62.3,62.31 1 0
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:62.31,64.4 1 0
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:66.3,66.76 1 0
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:69.2,69.56 1 0
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:72.99,74.16 2 2
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:74.16,76.3 1 1
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:78.2,79.38 2 1
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:79.38,81.34 2 1
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:81.34,83.4 1 0
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:85.3,106.5 5 1
+VincentLimarus/stock-analyzer-performance/service/trades/trades.go:109.2,109.20 1 1

@@ -32,6 +32,6 @@ var (
 		FROM trades
 		WHERE serial_code ~ '^[0-9]{4}-'
 		AND split_part(serial_code, '-', 1) = ANY($1)
-		ORDER BY created_at ASC;
+		ORDER BY serial_code DESC;
 	`
 )
